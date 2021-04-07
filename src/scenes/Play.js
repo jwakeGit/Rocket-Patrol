@@ -3,7 +3,18 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
+    preload(){
+        // load images/tile sprites
+        this.load.image('rocket', './assets/rocket.png');
+        this.load.image('spaceship', './assets/spaceship.png');
+        this.load.image('starfield', './assets/starfield.png');
+    } 
+
     create() {
+        // place starfield
+        this.starfield = this.add.tileSprite(0, 0, game.config.width, 
+        game.config.height, 'starfield').setOrigin(0, 0);
+
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, 
         game.config.width, borderUISize * 2, 
@@ -18,5 +29,14 @@ class Play extends Phaser.Scene {
         0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(game.config.width - borderUISize, 0, 
         borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+
+        // add rocket (player 1)
+        this.plRocket = new Rocket(this, game.config.width/2, 
+        game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
+
+    }
+
+    update() {
+        this.starfield.tilePositionX -= starSpeed;
     }
 }
